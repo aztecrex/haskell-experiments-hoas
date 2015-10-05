@@ -23,6 +23,11 @@ class EDSL exp where
 let_ :: EDSL exp => exp a -> (exp a -> exp b) -> exp b
 let_ x y = (lam y) `app` x
 
+{-
+t2 = (\_ x -> y + y where y = x + x) (100 - 10) (5 + 5) 
+--  == 40
+-- i.e. it ignores first argument and quadruples second argument
+-}
 t2 :: EDSL exp => exp IntT
 t2 = (lam $ \z -> lam $ \x -> let_ (x `add` x)
                                  $ \y -> y `add` y)
