@@ -24,7 +24,7 @@ let_ :: EDSL exp => exp a -> (exp a -> exp b) -> exp b
 let_ x y = (lam y) `app` x
 
 {-
-t2 = (\_ x -> y + y where y = x + x) (100 - 10) (5 + 5) 
+t2 = (\_ x -> y + y where y = x + x) (100 - 10) (5 + 5)
 --  == 40
 -- i.e. it ignores first argument and quadruples second argument
 -}
@@ -108,3 +108,11 @@ runNeed :: S Need m a -> m (Sem m a)
 runNeed x = unS x
 
 t2SND = runNeed t2 >>= print
+
+data Describe
+instance MonadIO m => EDSL (S Describe m)  where
+  int = S . return
+  add = error "nyi"
+  sub = error "nyi"
+  lam = error "nyi"
+  app = error "nyi"
